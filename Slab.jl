@@ -137,8 +137,8 @@ elseif scan_type == AngleScan
     end
 
     plot()
-    plot!(phi, T, label="Transmittance")
-    plot!(phi, R, label="Reflectance")
+    plot!(angle, T, label="Transmittance")
+    plot!(angle, R, label="Reflectance")
     gui()
     read(stdin, Char)
 
