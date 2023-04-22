@@ -66,7 +66,7 @@ end
 
 if uppercase(parsed_args["polarisation"]) == "TE" || uppercase(parsed_args["polarisation"]) == "S"
     pol_type = Spol
-elseif uppercase(parsed_args["polarisation"]) == "TE" || uppercase(parsed_args["polarisation"]) == "S"
+elseif uppercase(parsed_args["polarisation"]) == "TM" || uppercase(parsed_args["polarisation"]) == "P"
     pol_type = Ppol
 end
 
