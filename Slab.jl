@@ -109,11 +109,13 @@ if scan_type == WavelengthScan
     T = zeros(N)
     R = zeros(N)
 
-    Threads.@threads for k = 1:N
-        Tc, Rc = calc_TR(n, d, angle, wavelength[k], pol_type)
+    @time begin
+        Threads.@threads for k = 1:N
+            Tc, Rc = calc_TR(n, d, angle, wavelength[k], pol_type)
 
-        T[k] = Tc
-        R[k] = Rc
+            T[k] = Tc
+            R[k] = Rc
+        end
     end
 
     plot()
