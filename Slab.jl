@@ -38,11 +38,11 @@ end
 if length(splitted_wvl) == 3
     scan_type = WavelengthScan
 
-    wvl_min = parse(Int64, splitted_wvl[1])
-    wvl_step = parse(Int64, splitted_wvl[2])
-    wvl_max = parse(Int64, splitted_wvl[3])
+    wvl_min = parse(Float64, splitted_wvl[1])
+    wvl_step = parse(Float64, splitted_wvl[2])
+    wvl_max = parse(Float64, splitted_wvl[3])
 
-    angle = parse(Int64, splitted_ang[1])
+    angle = parse(Float64, splitted_ang[1])
 
     if !(wvl_min < wvl_max && (wvl_max-wvl_min) >= wvl_step)
         error("The wavelength interval specified is not correct.")
@@ -51,11 +51,11 @@ if length(splitted_wvl) == 3
 elseif length(splitted_ang) == 3
     scan_type = AngleScan
 
-    ang_min = parse(Int64, splitted_ang[1])
-    ang_step = parse(Int64, splitted_ang[2])
-    ang_max = parse(Int64, splitted_ang[3])
+    ang_min = parse(Float64, splitted_ang[1])
+    ang_step = parse(Float64, splitted_ang[2])
+    ang_max = parse(Float64, splitted_ang[3])
 
-    wavelength = parse(Int64, splitted_wvl[1])
+    wavelength = parse(Float64, splitted_wvl[1])
 
     if !(ang_min < ang_max && (ang_max-ang_min) >= ang_step)
         error("The angle interval specified is not correct.")
@@ -110,7 +110,7 @@ if scan_type == WavelengthScan
     R = zeros(N)
 
     Threads.@threads for k = 1:N
-        Tc, Rc = calc_TR(n, d, phi, wavelength[k], pol_type)
+        Tc, Rc = calc_TR(n, d, angle, wavelength[k], pol_type)
 
         T[k] = Tc
         R[k] = Rc
@@ -125,12 +125,12 @@ if scan_type == WavelengthScan
 elseif scan_type == AngleScan
     N = trunc(Int, (ang_max-ang_min)/ang_step)
 
-    phi = LinRange(ang_min, ang_max, N)
+    angle = LinRange(ang_min, ang_max, N)
     T = zeros(N)
     R = zeros(N)
 
     Threads.@threads for k = 1:N
-        Tc, Rc = calc_TR(n, d, phi[k], wavelength, pol_type)
+        Tc, Rc = calc_TR(n, d, angle[k], wavelength, pol_type)
 
         T[k] = Tc
         R[k] = Rc
